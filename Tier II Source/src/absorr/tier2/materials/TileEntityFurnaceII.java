@@ -27,8 +27,13 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
+     * 0 = Adapter
+     * 1 = Fuel Input
+     * 2-4 = Input
+     * 5-7 = Output
+     * 8-10 = Upgrades
      */
-    private ItemStack[] furnaceItemStacks = new ItemStack[6];
+    private ItemStack[] furnaceItemStacks = new ItemStack[11];
 
     /** The number of ticks that the furnace will keep burning */
     public int furnaceBurnTime = 0;
@@ -127,7 +132,7 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
      */
     public String getInvName()
     {
-        return "container.furnace";
+        return "container.furnace" + " II";
     }
 
     /**
@@ -293,19 +298,57 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
      */
     private boolean canSmelt()
     {
-        if (this.furnaceItemStacks[0] == null)
+    	if (this.furnaceItemStacks[2] == null || this.furnaceItemStacks[2].getItem() != TierII.adapterFuel)
         {
             return false;
         }
+    	
+    	boolean slot1;
+    	boolean slot2;
+    	boolean slot3;
+        if (this.furnaceItemStacks[2] == null)
+        {
+            slot1 = false;
+        }
         else
         {
-            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[2]);
             if (var1 == null) return false;
-            if (this.furnaceItemStacks[2] == null) return true;
-            if (!this.furnaceItemStacks[2].isItemEqual(var1)) return false;
-            int result = furnaceItemStacks[2].stackSize + var1.stackSize;
-            return (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
+            if (this.furnaceItemStacks[5] == null) return true;
+            if (!this.furnaceItemStacks[5].isItemEqual(var1)) return false;
+            int result = furnaceItemStacks[5].stackSize + var1.stackSize;
+            slot1 =  (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
         }
+        
+        if (this.furnaceItemStacks[3] == null)
+        {
+            slot2 = false;
+        }
+        else
+        {
+            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[3]);
+            if (var1 == null) return false;
+            if (this.furnaceItemStacks[6] == null) return true;
+            if (!this.furnaceItemStacks[6].isItemEqual(var1)) return false;
+            int result = furnaceItemStacks[6].stackSize + var1.stackSize;
+            slot2 =  (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
+        }
+        
+        if (this.furnaceItemStacks[4] == null)
+        {
+            slot3 = false;
+        }
+        else
+        {
+            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[4]);
+            if (var1 == null) return false;
+            if (this.furnaceItemStacks[7] == null) return true;
+            if (!this.furnaceItemStacks[7].isItemEqual(var1)) return false;
+            int result = furnaceItemStacks[7].stackSize + var1.stackSize;
+            slot3 =  (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
+        }
+        
+        return (slot1 || slot2 || slot3);
     }
 
     /**
@@ -315,22 +358,65 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
     {
         if (this.canSmelt())
         {
-            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
+            ItemStack var1;
+            var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[2]);
 
-            if (this.furnaceItemStacks[2] == null)
+            if (this.furnaceItemStacks[5] == null)
             {
-                this.furnaceItemStacks[2] = var1.copy();
+                this.furnaceItemStacks[5] = var1.copy();
             }
-            else if (this.furnaceItemStacks[2].isItemEqual(var1))
+            else if (this.furnaceItemStacks[5].isItemEqual(var1))
             {
-                furnaceItemStacks[2].stackSize += var1.stackSize;
+                furnaceItemStacks[5].stackSize += var1.stackSize;
             }
 
-            --this.furnaceItemStacks[0].stackSize;
+            --this.furnaceItemStacks[2].stackSize;
 
-            if (this.furnaceItemStacks[0].stackSize <= 0)
+            if (this.furnaceItemStacks[2].stackSize <= 0)
             {
-                this.furnaceItemStacks[0] = null;
+                this.furnaceItemStacks[2] = null;
+            }
+            
+            if (this.getSlotUpgradeBonus() == 1)
+            {
+                var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[3]);
+
+                if (this.furnaceItemStacks[6] == null)
+                {
+                    this.furnaceItemStacks[6] = var1.copy();
+                }
+                else if (this.furnaceItemStacks[6].isItemEqual(var1))
+                {
+                    furnaceItemStacks[6].stackSize += var1.stackSize;
+                }
+
+                --this.furnaceItemStacks[3].stackSize;
+
+                if (this.furnaceItemStacks[3].stackSize <= 0)
+                {
+                    this.furnaceItemStacks[3] = null;
+                }
+            }
+            
+            if (this.getSlotUpgradeBonus() == 2)
+            {
+                var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[4]);
+
+                if (this.furnaceItemStacks[7] == null)
+                {
+                    this.furnaceItemStacks[7] = var1.copy();
+                }
+                else if (this.furnaceItemStacks[7].isItemEqual(var1))
+                {
+                    furnaceItemStacks[7].stackSize += var1.stackSize;
+                }
+
+                --this.furnaceItemStacks[4].stackSize;
+
+                if (this.furnaceItemStacks[4].stackSize <= 0)
+                {
+                    this.furnaceItemStacks[4] = null;
+                }
             }
         }
     }
@@ -404,14 +490,15 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
     public int getStartInventorySide(ForgeDirection side)
     {
         if (side == ForgeDirection.DOWN) return 1;
-        if (side == ForgeDirection.UP) return 0; 
+        if (side == ForgeDirection.UP) return 2; 
         return 2;
     }
 
     @Override
     public int getSizeInventorySide(ForgeDirection side)
     {
-        return 1;
+    	if (side != ForgeDirection.DOWN) return 3;
+    	else return 1;
     }
 
 	@Override
@@ -422,9 +509,9 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
 	
 	public int getFuelUpgradeBonus()
 	{
-		ItemStack slot1 = this.getStackInSlot(3);
-		ItemStack slot2 = this.getStackInSlot(4);
-		ItemStack slot3 = this.getStackInSlot(5);
+		ItemStack slot1 = this.getStackInSlot(8);
+		ItemStack slot2 = this.getStackInSlot(9);
+		ItemStack slot3 = this.getStackInSlot(10);
 		if (slot1.getItem() == TierII.strengthUpgrade)
 		{
 			if (slot1.stackSize == 1)
@@ -457,9 +544,9 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
 	
 	public int getTimeUpgradeBonus()
 	{
-		ItemStack slot1 = this.getStackInSlot(3);
-		ItemStack slot2 = this.getStackInSlot(4);
-		ItemStack slot3 = this.getStackInSlot(5);
+		ItemStack slot1 = this.getStackInSlot(8);
+		ItemStack slot2 = this.getStackInSlot(9);
+		ItemStack slot3 = this.getStackInSlot(10);
 		if (slot1.getItem() == TierII.speedUpgrade)
 		{
 			if (slot1.stackSize == 1)
@@ -486,6 +573,26 @@ public class TileEntityFurnaceII extends TileEntity implements IInventory, ISide
 				return 100;
 			else if (slot3.stackSize == 3)
 				return 150;
+		}
+		return 0;
+	}
+	
+	public int getSlotUpgradeBonus()
+	{
+		ItemStack slot1 = this.getStackInSlot(8);
+		ItemStack slot2 = this.getStackInSlot(9);
+		ItemStack slot3 = this.getStackInSlot(10);
+		if (slot1.getItem() == TierII.slotUpgrade)
+		{
+			return slot1.stackSize;
+		}
+		if (slot2.getItem() == TierII.slotUpgrade)
+		{
+			return slot2.stackSize;
+		}
+		if (slot3.getItem() == TierII.slotUpgrade)
+		{
+			return slot3.stackSize;
 		}
 		return 0;
 	}

@@ -31,6 +31,9 @@ public class TierII
 	public static Item speedUpgrade;
 	public static Item strengthUpgrade;
 	
+	//Adapters
+	public static Item adapterFuel;
+	
 	//Tier II Tile Entities
 	public static Block furnaceTwo;
 	public static Block brewingTwo;
@@ -47,6 +50,7 @@ public class TierII
 		
 		upgradeBlock = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("upgradeBlock").setTextureFile(proxy.itemPic);
 		blankUpgrade = new Item(Config.baseItemID).setItemName("blankUpgrade").setIconIndex(0).setTextureFile(proxy.itemPic);
+		furnaceTwo = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("furnaceII");
     }
 	
 	/*
@@ -60,6 +64,9 @@ public class TierII
 		GameRegistry.addRecipe(new ItemStack(upgradeBlock), new Object[] {"RLR", "LGL", "RLR", 'R', Item.redstone, 'L', new ItemStack(Item.dyePowder, 1, 4), 'G', Block.blockGold});
 		
 		//Furnace II
+		LanguageRegistry.addName(furnaceTwo, "Furnace II");
+		ModLoader.registerBlock(furnaceTwo);
+		GameRegistry.addRecipe(new ItemStack(furnaceTwo), new Object[] {"RGR", "SFS", "SUS", 'R', Item.redstone, 'S', Block.stone, 'G', Item.lightStoneDust, 'F', Block.stoneOvenIdle, 'U', upgradeBlock});
 		
 		//Brewing Stand II
 		
