@@ -1,0 +1,18 @@
+[
+{
+  "modid" : "TierII",
+  "name" : "Tier II",
+  "version" : "0.0.0.01",
+  "url" : "http://absorr.pcriot.com/mod/mod_TierII.html",
+  "credits" : "Absorr Studios",
+  "authors": [
+    "Absorr"
+  ],
+  "description": "This mod creates more recipes for some of the items in Minecraft that can only be retrieved through creative mode, like Spawn Eggs and the Bottle o' Enchanting. Well, that was the idea at the start. It since then evolved into more stuff for your adventures, like the redstone tools!",
+  "logoFile" : "/absorr/tier2/logo.png",
+  "updateUrl" : "http://absorr.pcriot.com/mods/mod_TierII.html",
+  "parent" : "",
+  "screenshots": [
+  ]
+}
+]

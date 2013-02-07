@@ -7,14 +7,16 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
+import absorr.tier2.materials.TileEntityFurnaceII;
+
 public class GuiFurnaceII  extends GuiContainer
 {
-    private TileEntityFurnace furnaceInventory;
+    private TileEntityFurnaceII furnaceInventory;
 
-    public GuiFurnaceII(InventoryPlayer par1InventoryPlayer, TileEntityFurnace par2TileEntityFurnace)
+    public GuiFurnaceII(InventoryPlayer par1InventoryPlayer, TileEntityFurnaceII tileEntity)
     {
-        super(new ContainerFurnace(par1InventoryPlayer, par2TileEntityFurnace));
-        this.furnaceInventory = par2TileEntityFurnace;
+        super(new ContainerFurnaceII(par1InventoryPlayer, tileEntity));
+        this.furnaceInventory = tileEntity;
     }
 
     /**

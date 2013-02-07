@@ -1,5 +1,8 @@
 package absorr.tier2.base;
 
+import absorr.tier2.materials.BlockFurnaceII;
+import absorr.tier2.materials.TileEntityFurnaceII;
+import absorr.tier2.ui.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -8,10 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -21,6 +26,9 @@ public class TierII
 {
 	@SidedProxy(clientSide = "absorr.tier2.base.ClientProxy", serverSide = "absorr.tier2.base.CommonProxy", bukkitSide = "absorr.tier2.base.CommonProxy")
 	public static CommonProxy proxy;
+	
+	@Instance
+	public static TierII instance;
 	
 	//Crafting Materials
 	public static Block upgradeBlock;
@@ -43,14 +51,30 @@ public class TierII
 	public static Block enderChestTwo;
 	public static Block enchantingTwo;
 	
+	//Creative Tab
+	public static CreativeTabs tabTierII;
+	
+	public TierII(){}
+	
 	@Init
     public void load(FMLInitializationEvent event)
     {
 		Config.loadConfiguration();
+		proxy.registerRenderers();
+		NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+		GameRegistry.registerTileEntity(TileEntityFurnaceII.class, "Furnace II");
 		
-		upgradeBlock = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("upgradeBlock").setTextureFile(proxy.itemPic);
-		blankUpgrade = new Item(Config.baseItemID).setItemName("blankUpgrade").setIconIndex(0).setTextureFile(proxy.itemPic);
-		furnaceTwo = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("furnaceII");
+		tabTierII = new TabTierII(20,"Tier II");
+		
+		upgradeBlock = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("upgradeBlock").setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		blankUpgrade = new Item(Config.baseItemID).setItemName("blankUpgrade").setIconIndex(0).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		furnaceTwo = new BlockFurnaceII(Config.furnace2ID, 0).setBlockName("furnaceII").setCreativeTab(tabTierII);
+		slotUpgrade = new Item(Config.slotUpgradeID).setItemName("slotUpgrade").setIconIndex(1).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		speedUpgrade = new Item(Config.speedUpgradeID).setItemName("speedUpgrade").setIconIndex(2).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		strengthUpgrade = new Item(Config.strengthUpgradeID).setItemName("strengthUpgrade").setIconIndex(3).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		adapterFuel = new Item(Config.fuelAdapterID).setItemName("fuelAdapter").setIconIndex(4).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		
+		loadMaterials();
     }
 	
 	/*
@@ -81,12 +105,24 @@ public class TierII
 		//Enchanting Table II
 		
 		//Blank Upgrade
-		LanguageRegistry.addName(blankUpgrade, "BlankUpgrade");
-		GameRegistry.addRecipe(new ItemStack(blankUpgrade), new Object[] {"SSS", "SIS", "SSS", "S", Block.stone, "I", Item.ingotIron});
+		LanguageRegistry.addName(blankUpgrade, "Blank Upgrade");
+		GameRegistry.addRecipe(new ItemStack(blankUpgrade), new Object[] {"SSS", "SIS", "SSS", 'S', Block.stone, 'I', Item.ingotIron});
+		
+		//Slot Upgrade
+		LanguageRegistry.addName(slotUpgrade, "Slot Upgrade");
+
+		//Speed Upgrade
+		LanguageRegistry.addName(speedUpgrade, "Speed Upgrade");
+
+		//Strength Upgrade
+		LanguageRegistry.addName(strengthUpgrade, "Strength Upgrade");
+
+		//Fuel Adapter
+		LanguageRegistry.addName(adapterFuel, "Fuel Adapter");
 	}
 	
 	public String getVersion()
     {
-        return "0.1.0.01";
+        return "0.0.0.01";
     }
 }
