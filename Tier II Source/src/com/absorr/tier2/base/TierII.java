@@ -1,8 +1,9 @@
-package absorr.tier2.base;
+package com.absorr.tier2.base;
 
-import absorr.tier2.materials.BlockFurnaceII;
-import absorr.tier2.materials.TileEntityFurnaceII;
-import absorr.tier2.ui.GuiHandler;
+import com.absorr.tier2.materials.BlockFurnaceII;
+import com.absorr.tier2.materials.TileEntityFurnaceII;
+import com.absorr.tier2.ui.GuiHandler;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -66,9 +67,9 @@ public class TierII
 		
 		tabTierII = new TabTierII(20,"Tier II");
 		
-		upgradeBlock = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("upgradeBlock").setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
+		upgradeBlock = new Block(Config.baseBlockID, 0, Material.iron).setBlockName("upgradeBlock").setTextureFile(proxy.blockPic).setCreativeTab(tabTierII);
 		blankUpgrade = new Item(Config.baseItemID).setItemName("blankUpgrade").setIconIndex(0).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
-		furnaceTwo = new BlockFurnaceII(Config.furnace2ID, 0).setBlockName("furnaceII").setCreativeTab(tabTierII);
+		furnaceTwo = new BlockFurnaceII(Config.furnace2ID, 0).setBlockName("furnaceII").setTextureFile(proxy.blockPic).setCreativeTab(tabTierII);
 		slotUpgrade = new Item(Config.slotUpgradeID).setItemName("slotUpgrade").setIconIndex(1).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
 		speedUpgrade = new Item(Config.speedUpgradeID).setItemName("speedUpgrade").setIconIndex(2).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);
 		strengthUpgrade = new Item(Config.strengthUpgradeID).setItemName("strengthUpgrade").setIconIndex(3).setTextureFile(proxy.itemPic).setCreativeTab(tabTierII);

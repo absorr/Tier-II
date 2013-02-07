@@ -1,8 +1,9 @@
-package absorr.tier2.materials;
+package com.absorr.tier2.materials;
 
 import java.util.Random;
 
-import absorr.tier2.base.TierII;
+import com.absorr.tier2.base.TierII;
+
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockFurnace;

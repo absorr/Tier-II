@@ -1,4 +1,4 @@
-package absorr.tier2.base;
+package com.absorr.tier2.base;
 
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.relauncher.Side;

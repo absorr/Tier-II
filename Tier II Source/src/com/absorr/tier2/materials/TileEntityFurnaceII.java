@@ -1,6 +1,7 @@
-package absorr.tier2.materials;
+package com.absorr.tier2.materials;
 
-import absorr.tier2.base.TierII;
+import com.absorr.tier2.base.TierII;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

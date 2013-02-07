@@ -1,10 +1,11 @@
-package absorr.tier2.ui;
+package com.absorr.tier2.ui;
+
+import com.absorr.tier2.materials.*;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import absorr.tier2.materials.*;
 
 public class GuiHandler implements IGuiHandler {
         //returns an instance of the Container you made earlier

@@ -1,4 +1,4 @@
-package absorr.tier2.ui;
+package com.absorr.tier2.ui;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,7 +7,8 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-import absorr.tier2.materials.TileEntityFurnaceII;
+import com.absorr.tier2.materials.TileEntityFurnaceII;
+
 
 public class GuiFurnaceII  extends GuiContainer
 {

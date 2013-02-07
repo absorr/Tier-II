@@ -1,4 +1,4 @@
-package absorr.tier2.base;
+package com.absorr.tier2.base;
 
 import java.io.File;
 
